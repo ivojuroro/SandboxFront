@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import HomePage from '../home/HomePage'
-import LoginPage from '../login/LoginPage'
-import exercises from '../exercises/exercises'
-import statsUsers from '../exercises/statsUsers'
-import statsExercises from '../exercises/statsExercises'
+import HomePage from '../../src/components/UserHome'
+import LoginPage from '../../src/components/login/Login'
+import exercises from '../../src/components/exercises/exercises'
+import statsUsers from '../../src/components/exercises/statsUsers'
+import statsExercises from '../../src/components/exercises/statsExercises'
+
 Vue.use(Router);
 
 export const router = new Router({
