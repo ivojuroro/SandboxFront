@@ -1,9 +1,8 @@
 <template>
     <div class="container h-100">
-        <!--        <div class="row align-items-center">-->
-        <!--        <div class="row justify-content-center align-self-center">-->
         <div>
             <b-table striped hover :items="items"></b-table>
+            <b-button v-on:click="createExercise">Add exercise</b-button>
         </div>
     </div>
     <!--    </div>-->
@@ -18,8 +17,20 @@
                     {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
                     {age: 89, first_name: 'Geneva', last_name: 'Wilson'},
                     {age: 38, first_name: 'Jami', last_name: 'Carney'}
-                ]
+                ],
+                exercisesQuantity: 0
+            }
+        },
+        created() {
+        },
+        methods:{
+            retrieveExercises: function () {
+
+            },
+            createExercise: function () {
+                this.$router.push('/createExercise')
             }
         }
+
     }
 </script>

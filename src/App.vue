@@ -11,38 +11,64 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><router-link :to="{name: 'home'}" class="nav-link">Home</router-link></li>
-                    <li class="nav-item"><router-link :to="{name: 'login'}" class="nav-link">Login</router-link></li>
-                    <li v-if="!loggedIn" class="nav-item"><router-link :to="{name: 'exercises'}" class="nav-link">Exercises</router-link></li>
-                    <li v-if="!loggedIn" class="nav-item"><router-link :to="{name: 'exercisesstatus'}" class="nav-link">Status</router-link></li>
-                    <li v-if="!loggedIn" class="nav-item"><router-link :to="{name: 'users'}" class="nav-link">Users</router-link></li>
-                    <li v-if="!loggedIn" class="nav-item"><router-link :to="{name: 'logout'}" class="nav-link">Logout</router-link></li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'home'}" class="nav-link">Home</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'login'}" class="nav-link">Login</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'exercises'}" class="nav-link">Exercises</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'exercisesstatus'}" class="nav-link">Status</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'users'}" class="nav-link">Users</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{name: 'logout'}" class="nav-link">Logout</router-link>
+                    </li>
                 </ul>
             </div>
         </nav>
         <router-view></router-view>
     </div>
-
 </template>
 
 <script>
 
     export default {
         name: 'app',
-        data(){
-            return{}
-        },
         computed: {
             loggedIn() {
-                return this.$store.getters.loggedIn
+                return this.$store.state.authentication.status.loggedIn;
             }
-        },
-        created() {
-            // eslint-disable-next-line no-console
-            console.log(this.$store.getters.user)
         }
     }
 </script>
 
 <style>
+    #add-data-button {
+        margin-left: 1%;
+
+    }
+
+    #add-data-input {
+        margin-right: 1%;
+
+    }
+
+    #form-add-test-data {
+        margin-bottom: 3%;
+        align-content: center;
+    }
+
+    #submit-button {
+        margin-right: 1%;
+    }
+
+    #reset-button {
+        margin-left: 1%;
+    }
 </style>

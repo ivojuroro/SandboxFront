@@ -26,10 +26,8 @@
                             <div v-show="submitted && !password" class="invalid-feedback">Password is required</div>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-primary" :disabled="loggingIn">Login</button>
+                            <button class="btn btn-primary">Login</button>
                             <div id="error-message" v-if="error">Check credentials!</div>
-                            <img v-show="loggingIn"
-                                 src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
                         </div>
                     </form>
                 </div>
@@ -51,35 +49,35 @@
                 loading: ''
             }
         },
-        computed: {
-            loggingIn() {
-                return this.$store.state.authentication.status.loggingIn;
-            }
-        },
         created() {
             this.error = false;
             this.$store.dispatch('authentication/logout');
         },
         methods: {
             handleSubmit() {
+                // eslint-disable-next-line no-console
+                console.log("soy yo");
+                // eslint-disable-next-line no-console
+                console.log(this.$store.state.user);
                 this.loading = true;
                 this.submitted = true;
                 const {username, password} = this;
                 const {dispatch} = this.$store;
+                dispatch('authentication/login', {username, password});
+
                 if (username && password) {
                     dispatch('authentication/login', {username, password})
                         .then(response => {
                             this.loading=false;
-                            this.$router.push({name: 'home'})
                             if(response.status===400){
                                 this.error = true;
                             }
                         }).catch(error => {
+                            alert(error);
                         this.loading = false;
-                        // eslint-disable-next-line no-console
-                        console.log(error);
                         this.error = true;
-                    })
+                    });
+                    this.$router.push({name: 'home'}).catch();
                 }
             }
         }

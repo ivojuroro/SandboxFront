@@ -1,33 +1,45 @@
 import {userService} from '../_services';
+const jwt = require('jsonwebtoken');
+import { router } from '../_router';
 
 const user = JSON.parse(localStorage.getItem('accessToken'));
 const initialState = user
-    ? {status: {loggedIn: true}, user, type: 0} // if it is already logged then the initial state is the user token
-    : {status: {loggedIn: null}, user: null, type: 0}; // if not, there is nothing!
+    ? {status: {loggedIn: true}, user, permissionLevel: null} // if it is already logged then the initial state is the user token
+    : { status: {}, user: null, permissionLevel: null }; // if not, there is nothing!
 
 export const authentication = {
     namespaced: true,
-    state: {
-        initialState, //state is our main application store. It is the single source of truth.
-    },
-    getters: {
-        loggedIn(state){
-            return state.status.loggedIn() !== null;
-        }
+    state: initialState,
+    getters:{
+        getUser: state => {
+            // eslint-disable-next-line no-console
+            console.log("getting changes on user");
+            return state.user;
+            },
+        getPermissionLevel: state => {
+            // eslint-disable-next-line no-console
+            console.log("getting changes on pl")
+            return state.status.permissionLevel;}
     },
     actions: { //the trigger
-        login({dispatch, commit}, {username, password}) { //todo: get the permissionLevel!!!!!
+        login({dispatch, commit}, {username, password}) {
             return new Promise((resolve, reject) => {
             commit('loginRequest', {username});
             userService.login(username, password)
                 .then(
                     user => {
                         commit('loginSuccess', user);
+                        commit('updatePermissionLevel', jwt.verify(user.data.accessToken, "myS33!!creeeT").permissionLevel);
+                        router.push('/');
                         resolve(user);
-
-                    }).catch(
+                    },
                     error => {
                         commit('loginFailure', error);
+                        dispatch('alert/error', error, {root: true});
+                    }
+                    ).catch(
+                    error => {
+                        commit('loginFailure');
                         dispatch('alert/error', error, {root: true}); //?
                         reject(error);
                     })
@@ -37,9 +49,24 @@ export const authentication = {
         logout({commit}) {
             userService.logout();
             commit('logout');
+        },
+
+        getAll({dispatch}){
+            return new Promise((resolve, reject) => {
+                userService.getAll().then(users =>{
+                    resolve(users)
+                    }
+                ).catch(error=>{
+                    dispatch('alert/error', error, {root: true});
+                    reject(error)
+                })
+            });
         }
     },
     mutations: {
+        updatePermissionLevel(state, permissionLevel){
+            state.status = {loggedIn: true, permissionLevel: permissionLevel};
+        },
         loginRequest(state, user) {
             state.status = {loggingIn: false};
             state.user = user;
