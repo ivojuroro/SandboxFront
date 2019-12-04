@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+    <link rel = "stylesheet" href="style.css"/>
+    <title> Exercice n°1 </title>
+    <h1> Exercice n°1 </h1>
+</head>
+
+<body>
+    <script>var code="";</script>
+    <aside>
+        <article> Ceci est l'énoncé de l'exercice </article>
+        <article> Ceci sont les données d'entrée</article>
+        <div id="answer"></div>
+        <button id="aff" onclick="document.getElementById('answer').innerHTML=code">Obtenir code</button>
+    </aside>
+
+    <div id="container">
+    <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script>
+        require.config({ paths: { 'vs': 'node_modules/monaco-editor/min/vs' }});
+        require(['vs/editor/editor.main'], function() {
+            var editor = monaco.editor.create(document.getElementById('container'), {
+                value: "",
+                language: 'javascript',
+                theme: ''
+            });
+            editor.getModel().onDidChangeContent((event)=>{code=editor.getValue()});
+        });
+    </script>
+    </div>
+
+<button id = "runButton" type = "button"> Run </button>
+<button id = "submitButton" type = "button"> Submit </button>
+</body>
+</html>
