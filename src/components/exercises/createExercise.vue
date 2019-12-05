@@ -78,17 +78,10 @@
                 console.log("sending exercise");
                 // eslint-disable-next-line no-console
                 console.log(JSON.stringify(this.form));
-                // exerciseService.insertExercise(this.form);
-                // dispatch('exercises/insertExercise', JSON.stringify(this.form))
-                //     .then(response => {
-                //         if (response.status === 201)
-                //             this.sent = true;
-                //     }).catch(error => {
-                //     // eslint-disable-next-line no-console
-                //     console.log(error)
-                // })
             },
             onReset(evt) {
+                // eslint-disable-next-line no-console
+                console.log(this.form);
                 evt.preventDefault()
                 this.form.name = '';
                 this.form.description = '';

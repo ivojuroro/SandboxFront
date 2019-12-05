@@ -51,22 +51,16 @@
         },
         created() {
             this.error = false;
-            this.$store.dispatch('authentication/logout');
+            this.$store.dispatch('logout');
         },
         methods: {
             handleSubmit() {
-                // eslint-disable-next-line no-console
-                console.log("soy yo");
-                // eslint-disable-next-line no-console
-                console.log(this.$store.state.user);
                 this.loading = true;
                 this.submitted = true;
                 const {username, password} = this;
                 const {dispatch} = this.$store;
-                dispatch('authentication/login', {username, password});
-
                 if (username && password) {
-                    dispatch('authentication/login', {username, password})
+                    dispatch('login', {username, password})
                         .then(response => {
                             this.loading=false;
                             if(response.status===400){

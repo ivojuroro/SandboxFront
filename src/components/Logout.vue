@@ -10,8 +10,8 @@
             return {}
         },
         created() {
-            this.$store.dispatch('authentication/logout');
-            this.$router.push({name: '/'})
+            this.$store.dispatch('logout');
+            this.$router.push({name: 'home'})
         },
         methods: {}
     }

@@ -14,22 +14,25 @@
                     <li class="nav-item">
                         <router-link :to="{name: 'home'}" class="nav-link">Home</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="!userLoggedIn">
                         <router-link :to="{name: 'login'}" class="nav-link">Login</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="isAdmin">
                         <router-link :to="{name: 'exercises'}" class="nav-link">Exercises</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="isRegularUser">
                         <router-link :to="{name: 'exercisesstatus'}" class="nav-link">Status</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="isAdmin">
                         <router-link :to="{name: 'users'}" class="nav-link">Users</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userLoggedIn">
                         <router-link :to="{name: 'logout'}" class="nav-link">Logout</router-link>
                     </li>
                 </ul>
+                <div id="example">
+                    <button v-on:click="mostrar">Greet</button>
+                </div>
             </div>
         </nav>
         <router-view></router-view>
@@ -41,8 +44,24 @@
     export default {
         name: 'app',
         computed: {
-            loggedIn() {
-                return this.$store.state.authentication.status.loggedIn;
+            userLoggedIn() {
+                return this.$store.getters.getUser !== null;
+            },
+            isAdmin(){
+                return this.$store.getters.getIsAdmin;
+            },
+            isRegularUser(){
+              return this.$store.getters.getIsRegularUser;
+            }
+        },
+        methods:{
+            mostrar: function () {
+                // eslint-disable-next-line no-console
+                console.log("soy admin?");
+                // eslint-disable-next-line no-console
+                console.log(this.isAdmin)
+                // eslint-disable-next-line no-console
+                console.log(this.userLoggedIn)
             }
         }
     }

@@ -1,31 +1,38 @@
 <template>
     <div class="container h-100">
         <div>
-            <b-table striped hover :items="items"></b-table>
             <b-button v-on:click="createExercise">Add exercise</b-button>
+<!--            <b-button v-on:click="retrieveExercises">Retrieve</b-button>-->
         </div>
     </div>
     <!--    </div>-->
 </template>
 
 <script>
+    import {exerciseService} from "../../_services";
+
     export default {
         data() {
             return {
-                items: [
-                    {age: 40, first_name: 'Dickerson', last_name: 'Macdonald'},
-                    {age: 21, first_name: 'Larsen', last_name: 'Shaw'},
-                    {age: 89, first_name: 'Geneva', last_name: 'Wilson'},
-                    {age: 38, first_name: 'Jami', last_name: 'Carney'}
-                ],
-                exercisesQuantity: 0
+                exercises: ''
             }
         },
         created() {
         },
-        methods:{
+        computed: {
+        },
+        methods: {
             retrieveExercises: function () {
-
+                exerciseService.retrieveExercises().then(exercise => {
+                    let exercises = [];
+                    exercise.forEach(function (d) {
+                        exercises.push({"name": d.name, "description": d.description});
+                    });
+                    return exercises;
+                }).catch(error =>
+                    // eslint-disable-next-line no-console
+                    console.log(error)
+                );
             },
             createExercise: function () {
                 this.$router.push('/createExercise')

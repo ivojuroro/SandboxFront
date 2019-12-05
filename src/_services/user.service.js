@@ -31,6 +31,7 @@ function login(username, password) {
 
 function logout() {
     localStorage.removeItem('user');
+    localStorage.clear();
 }
 
 function getAll() {

@@ -1,3 +1,7 @@
+import Vuex from 'vuex';
+import Vue from "vue";
+Vue.use(Vuex);
+
 import {userService} from '../_services';
 const jwt = require('jsonwebtoken');
 import { router } from '../_router';
@@ -5,21 +9,24 @@ import { router } from '../_router';
 const user = JSON.parse(localStorage.getItem('accessToken'));
 const initialState = user
     ? {status: {loggedIn: true}, user, permissionLevel: null} // if it is already logged then the initial state is the user token
-    : { status: {}, user: null, permissionLevel: null }; // if not, there is nothing!
+    : { status: {}, user: null, permissionLevel: null}; // if not, there is nothing!
 
-export const authentication = {
+export const store = new Vuex.Store({
     namespaced: true,
     state: initialState,
     getters:{
-        getUser: state => {
-            // eslint-disable-next-line no-console
-            console.log("getting changes on user");
+        getUser: (state) => {
             return state.user;
             },
-        getPermissionLevel: state => {
-            // eslint-disable-next-line no-console
-            console.log("getting changes on pl")
-            return state.status.permissionLevel;}
+        getPermissionLevel: (state) => {
+            return state.permissionLevel;
+            },
+        getIsAdmin: (state) =>{
+            return state.permissionLevel === 7 && state.user !== null;
+        },
+        getIsRegularUser: (state) =>{
+            return state.permissionLevel === 3 && state.user !== null;
+        }
     },
     actions: { //the trigger
         login({dispatch, commit}, {username, password}) {
@@ -65,7 +72,7 @@ export const authentication = {
     },
     mutations: {
         updatePermissionLevel(state, permissionLevel){
-            state.status = {loggedIn: true, permissionLevel: permissionLevel};
+            state.permissionLevel = permissionLevel;
         },
         loginRequest(state, user) {
             state.status = {loggingIn: false};
@@ -84,4 +91,4 @@ export const authentication = {
             state.user = null;
         }
     }
-};
+});
