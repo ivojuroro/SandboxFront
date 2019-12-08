@@ -35,7 +35,7 @@
                                         rows="3"
                                         max-rows="6"
                                         v-model="form.testData"
-                                        placeholder="Enter code example, place a , between elements and a line feed between arrays"
+                                        placeholder="Enter test data: place a , between elements and a line feed between arrays"
                                 ></b-form-textarea>
             </b-form-group>
             <div>

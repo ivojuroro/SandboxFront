@@ -6,10 +6,12 @@ export const userService = {
     getAll
 };
 
+axios.defaults.baseURL = 'http://127.0.0.1:3605';
+
 function login(username, password) {
     let loginUser = {login: username, password: password};
     const headers = {'Content-Type': 'application/json'};
-    return axios.post('http://127.0.0.1:3605/auth', loginUser, headers)
+    return axios.post('/auth', loginUser, headers)
         .then(function (user) {
             if (user.status === 201) {
                 // eslint-disable-next-line no-console
@@ -34,6 +36,13 @@ function logout() {
 }
 
 function getAll() {
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user').data.accessToken;
-    return axios.get('http://127.0.0.1:3605/users').then()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user');
+    return axios.get('/users')
+        .then(users => {
+                return users;
+            }
+        ).catch(error => {
+                return error;
+            }
+        )
 }

@@ -30,9 +30,6 @@
                         <router-link :to="{name: 'logout'}" class="nav-link">Logout</router-link>
                     </li>
                 </ul>
-                <div id="example">
-                    <button v-on:click="mostrar">Greet</button>
-                </div>
             </div>
         </nav>
         <router-view></router-view>
@@ -106,5 +103,9 @@
         padding: 1em 1.5em;
         display: block;
         word-wrap: break-word;
+    }
+
+    #user-info-card{
+        align-content: center;
     }
 </style>

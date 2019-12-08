@@ -1,22 +1,22 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div class="container h-100">
-        <b-table :items="names" :fields="fields" striped responsive="sm">
+        <h2>Users</h2>
+        <b-table :items="users" :fields="fieldsToShow" striped responsive="sm">
             <template v-slot:cell(show_details)="row">
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
                     {{ row.detailsShowing ? 'Hide' : 'Show'}}
                 </b-button>
             </template>
-
             <template v-slot:row-details="row">
-                <b-card>
+                <b-card id="user-info-card">
                     <b-row class="mb-2">
-                        <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
-                        <b-col>{{ row.item.age }}</b-col>
+                        <b-col sm="4" class="text-sm-right"><b>Id:</b></b-col>
+                        <b-col>{{ row.item.id }}</b-col>
                     </b-row>
 
                     <b-row class="mb-2">
-                        <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
-                        <b-col>{{ row.item.isActive }}</b-col>
+                        <b-col sm="4" class="text-sm-right"><b>Score:</b></b-col>
+                        <b-col>{{ row.item.score }}</b-col>
                     </b-row>
                 </b-card>
             </template>
@@ -25,23 +25,27 @@
 </template>
 
 <script>
+    import {userService} from "../../_services";
+
     export default {
         data() {
             return {
-                fields: ['first_name', 'last_name', 'show_details'],
-                names: [
-                    { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-                    { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-                    {
-                        isActive: false,
-                        age: 89,
-                        first_name: 'Geneva',
-                        last_name: 'Wilson',
-                        _showDetails: true
-                    },
-                    { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
-                ]
+                fieldsToShow: ['login', 'permissionLevel', 'show_details'],
+                users: []
             }
+        },
+        beforeMount: function () {
+            userService.getAll()
+                .then(user => {
+                    this.users = user.data;
+                    this.users.forEach(us => us._showDetails = false);
+                    this.users.map(us => us.permissionLevel = (us.permissionLevel === 7) ? 'Admin' : 'User');
+                    this.users = JSON.parse(JSON.stringify(this.users));
+                })
+                .catch(error => {
+                    // eslint-disable-next-line no-console
+                    console.log(error);
+                })
         }
     }
 </script>
