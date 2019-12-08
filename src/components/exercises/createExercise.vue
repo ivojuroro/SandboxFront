@@ -1,8 +1,7 @@
 <template>
     <div class="container h-100">
-        <b-form @submit.prevent="handleSubmit" @reset="onReset" v-if="show">
-
-            <b-form-group id="input-group-name" label="Name:" label-for="input-2">
+        <b-form @submit.prevent="handleSubmit">
+            <b-form-group id="input-group-name" label="Name:" label-for="input-1">
                 <b-form-input
                         id="input-2"
                         v-model="form.name"
@@ -29,9 +28,16 @@
                         placeholder="Enter code example"
                 ></b-form-textarea>
             </b-form-group>
-            <div v-if="sent" id="exercise-sent-label">
-                <h2>Exercise sent!</h2>
-            </div>
+
+            <b-form-group id="input-group-example-code" label="Test data:" label-for="input-4" size="5">
+                                <b-form-textarea
+                                        id="input-example-code"
+                                        rows="3"
+                                        max-rows="6"
+                                        v-model="form.testData"
+                                        placeholder="Enter code example, place a , between elements and a line feed between arrays"
+                                ></b-form-textarea>
+            </b-form-group>
             <div>
                 <b-button type="submit" variant="primary" id="submit-button">Submit</b-button>
                 <b-button type="reset" variant="danger" id="reset-button">Reset</b-button>
@@ -44,7 +50,8 @@
 </template>
 
 <script>
-    // import exerciseService from '../../_services';
+    import {exerciseService} from "../../_services";
+
     export default {
         data() {
             return {
@@ -52,46 +59,17 @@
                     name: '',
                     description: '',
                     exampleCode: '',
-                    testData: []
-                },
-                sent: false,
-                show: true
+                    testData:''
+                }
             }
         },
         methods: {
-            addTestData: function () {
-                let newData = this.dataInput;
-                if (!newData) {
-                    return;
-                }
-                this.testData.push(newData);
-                // eslint-disable-next-line no-console
-                console.log(this.testData);
-                this.dataInput = '';
-            },
-            onSubmit(evt) {
-                evt.preventDefault();
-                alert(JSON.stringify(this.form));
+            modifyTestData(){
+                this.form.testData = this.form.testData.split("\n").map(d=>d.split(","));
             },
             handleSubmit() {
-                // eslint-disable-next-line no-console
-                console.log("sending exercise");
-                // eslint-disable-next-line no-console
-                console.log(JSON.stringify(this.form));
-            },
-            onReset(evt) {
-                // eslint-disable-next-line no-console
-                console.log(this.form);
-                evt.preventDefault()
-                this.form.name = '';
-                this.form.description = '';
-                this.form.exampleCode = '';
-                this.form.testData = [];
-                // Trick to reset/clear native browser form validation state
-                this.show = false;
-                this.$nextTick(() => {
-                    this.show = true
-                })
+                this.modifyTestData();
+                exerciseService.insertExercise(JSON.stringify(this.form));
             }
         }
     }

@@ -9,7 +9,6 @@ export const userService = {
 function login(username, password) {
     let loginUser = {login: username, password: password};
     const headers = {'Content-Type': 'application/json'};
-    // eslint-disable-next-line no-console
     return axios.post('http://127.0.0.1:3605/auth', loginUser, headers)
         .then(function (user) {
             if (user.status === 201) {
@@ -35,5 +34,6 @@ function logout() {
 }
 
 function getAll() {
-return axios.get('http://127.0.0.1:3605/users').then()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user').data.accessToken;
+    return axios.get('http://127.0.0.1:3605/users').then()
 }

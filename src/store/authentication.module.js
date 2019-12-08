@@ -4,7 +4,6 @@ Vue.use(Vuex);
 
 import {userService} from '../_services';
 const jwt = require('jsonwebtoken');
-import { router } from '../_router';
 
 const user = JSON.parse(localStorage.getItem('accessToken'));
 const initialState = user
@@ -37,7 +36,6 @@ export const store = new Vuex.Store({
                     user => {
                         commit('loginSuccess', user);
                         commit('updatePermissionLevel', jwt.verify(user.data.accessToken, "myS33!!creeeT").permissionLevel);
-                        router.push('/');
                         resolve(user);
                     },
                     error => {
