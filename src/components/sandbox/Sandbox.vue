@@ -3,8 +3,9 @@
     <MonacoEditor
                 height="300"
                 width="1200"
-                language="javascript"
-                :code="code"
+                theme='vsc'
+                :language="initlang"
+                :code="initcode"
                 :editorOptions="options"
                 @mounted="onMounted"
                 @codeChange="onCodeChange"
@@ -15,18 +16,26 @@
 
 <script>
 import MonacoEditor from 'vue-monaco-editor';
+import {editor} from 'monaco-editor';
 
 export default {
   data () {
     return {
-      code: '//Hello World !',
+      initcode: '//type here',
+      initlang:"javascript",
       options: {
-        selectOnLineNumbers: true
+        selectOnLineNumbers: true,
       }
     }
   },
-  onCodeChange() {
-      alert(this.code);
+  methods:{
+  onCodeChange(monedit) {
+      alert(monedit.getValue());
+  },
+  onMounted(monedit) {
+      editor.setModelLanguage(monedit.getModel(), "python");
+      alert(monedit.getModel().getModeId());
+  },
   },
   components: {
     MonacoEditor
