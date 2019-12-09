@@ -1,7 +1,8 @@
 <template>
     <div id="app">
+        <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
         <link href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
-        <nav class="navbar navbar-expand-lg navbar-light">
+        <nav class="navbar navbar-expand-lg navbar-light" id="navbar-top">
             <a class="navbar-brand">
                 <img src="https://genbin.genesys.com/media/genesys_logo_tagline.svg" width="200" height="40" alt="">
             </a>
@@ -107,5 +108,8 @@
 
     #user-info-card{
         align-content: center;
+    }
+    #navbar-top{
+        font-family: 'Raleway', sans-serif;
     }
 </style>

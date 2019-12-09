@@ -1,8 +1,9 @@
 <template>
-    <div class="container">
+    <div class="container h-100">
+        <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
         <div class="row justify-content-center align-self-center">
             <div class="col-6 mx-auto">
-                <div class="card border-light">
+                <div class="card border-light rounded-sm" id="login-card">
                     <h5 class="card-title">Login</h5>
                     <form @submit.prevent="handleSubmit">
                         <!--            The .form-group class is the easiest way to add some structure to forms. It provides a flexible class that encourages proper grouping of labels, controls, optional help text, and form validation messaging-->
@@ -10,7 +11,7 @@
                             <label htmlFor="username">Username</label>
                             <!--                form-control and is-valid -> bootstrap!-->
                             <div class="input-group input-group-sm mb-3">
-                                <input type="text" v-model="username" name="username" class="form-control"
+                                <input id="user-input" type="text" v-model="username" name="username" class="form-control"
                                        :class="{ 'is-invalid': submitted && !username }" aria-label="Small"
                                        aria-describedby="inputGroup-sizing-sm"/>
                             </div>
@@ -83,9 +84,28 @@
         text-align: center;
         height: 100px;
         margin-top: 8%;
+        border: none;
     }
     #error-message{
         color: #ff6666;
         font-size: 14px;
     }
+    #login-card{
+        box-shadow:
+                0 1px 2.5px -24px rgba(0, 0, 0, 0.065),
+                0 2.3px 6.1px -24px rgba(0, 0, 0, 0.093),
+                0 4.4px 11.5px -24px rgba(0, 0, 0, 0.115),
+                0 7.8px 20.5px -24px rgba(0, 0, 0, 0.137),
+                0 14.6px 38.4px -24px rgba(0, 0, 0, 0.165),
+                0 35px 92px -24px rgba(0, 0, 0, 0.23)
+    ;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 20px;
+        font-family: 'Raleway', sans-serif;
+
+
+    }
+
 </style>

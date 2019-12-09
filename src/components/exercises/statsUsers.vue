@@ -1,5 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <div class="container h-100">
+    <div class="container h-100" id="users-container">
+        <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
         <h2>Users</h2>
         <b-table :items="users" :fields="fieldsToShow" striped responsive="sm">
             <template v-slot:cell(show_details)="row">
@@ -49,3 +50,8 @@
         }
     }
 </script>
+<style>
+    #users-container{
+        font-family: 'Raleway', sans-serif;
+    }
+</style>
