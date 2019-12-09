@@ -1,0 +1,73 @@
+#container{
+    position: absolute;
+    height: 70%;
+    left: 37%;
+    width: 55%;
+    color: blue;
+    border:1px solid grey;
+    margin: 0%;
+}
+
+article{
+    font: arial;
+    font-size: 18px;
+    margin: 20px;
+    padding: 12px;
+    height:37%;
+    border: 1px solid grey;
+    background-color: white;
+}
+
+aside{
+    position: absolute;
+    height: 70%;
+    left: 30px;
+    width: 30%;
+    float: left;
+    border:1px solid grey
+}
+
+#test{
+    position:absolute;
+    top: 600px;
+}
+
+#runButton{
+    position:absolute;
+    right: 20%;
+    bottom: 5%;
+    border: 2px green solid;
+    color: green;
+}
+
+#submitButton{
+    position:absolute;
+    right: 10%;
+    bottom: 5%;
+    border: 2px blue solid;
+    color: blue;
+}
+
+button{
+    background-color:white; 
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 3px 1px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    width: 90px;
+}
+
+button#runButton:hover {
+    background-color: green;
+    color: white;
+}
+
+button#submitButton:hover {
+    background-color: blue;
+    color: white;
+}

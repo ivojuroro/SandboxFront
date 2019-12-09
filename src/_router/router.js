@@ -8,6 +8,7 @@ import statsUsers from '../../src/components/exercises/statsUsers'
 import exercisesStatus from '../../src/components/exercises/statsExercises'
 import Logout from '../../src/components/Logout'
 import createExercise from '../../src/components/exercises/createExercise'
+import sandbox from '../../src/components/sandbox/Sandbox'
 
 Vue.use(Router);
 
@@ -21,11 +22,12 @@ export const router = new Router({
         {path: '/exercisesstatus', component: exercisesStatus, name: 'exercisesstatus'}, // for the admin: it will retrieve info of the exercises, and therefore, the users that have been working on it
         {path: '/logout', component: Logout, name: 'logout'},
         {path: '/createExercise', component: createExercise, name: 'createExercise'},
+        {path: '/doExercise', component: sandbox, name: 'temporarySandboxPage'},
         {path: '*', redirect: 'home'}
     ],
 });
 
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
     // redirect to login page if not logged in and trying to access a restricted page
     const publicPages = ['/', '/login'];
     const authRequired = !publicPages.includes(to.path);
@@ -34,4 +36,4 @@ router.beforeEach((to, from, next) => {
         return next('/login');
     }
     next();
-});
+});*/
