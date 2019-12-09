@@ -29,9 +29,11 @@
             }
         },
         created() {
-        var script = document.createElement('script');    
-        script.setAttribute("src","../../../node_modules/monaco-editor/min/vs/loader.js");
-        script.onload = function() {
+        var script1 = document.createElement('script');
+        var script2 = document.createElement('script');    
+    
+        script1.setAttribute("src","../../../node_modules/monaco-editor/min/vs/loader.js");
+        script2.onload = function() {
             alert('hi');
             require.config({ paths: { 'vs': '../../../node_modules/monaco-editor/min/vs' }});
             require(['vs/editor/editor.main.js'], function() {
@@ -43,7 +45,8 @@
             editor.getModel().onDidChangeContent(()=>{this.code=editor.getValue()});
         });
         }
-        document.body.appendChild(script);
+        document.body.appendChild(script1);
+        document.body.appendChild(script2);
            //initialize the exercise
         },
         methods: {
