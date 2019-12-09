@@ -15,7 +15,7 @@
     </div>
 </template>
 
-<script src="../../../node_modules/monaco-editor/min/vs/loader.js">
+<script>
     export default {
         data() {
             return {
@@ -29,15 +29,21 @@
             }
         },
         created() {
-        require.config({ paths: { 'vs': '../../../node_modules/monaco-editor/min/vs' }});
-        require(['vs/editor/editor.main'], function() {
-            var editor = monaco.editor.create(document.getElementById('container'), {
-                value: "",
-                language: 'javascript',
-                theme: ''
+        var script = document.createElement('script');    
+        script.setAttribute("src","../../../node_modules/monaco-editor/min/vs/loader.js");
+        script.onload = function() {
+            alert('hi');
+            require.config({ paths: { 'vs': '../../../node_modules/monaco-editor/min/vs' }});
+            require(['vs/editor/editor.main.js'], function() {
+                var editor = editor.create(document.getElementById('container'), {
+                    value: "",
+                    language: 'javascript',
+                    theme: ''
             });
-            editor.getModel().onDidChangeContent((event)=>{this.code=editor.getValue()});
+            editor.getModel().onDidChangeContent(()=>{this.code=editor.getValue()});
         });
+        }
+        document.body.appendChild(script);
            //initialize the exercise
         },
         methods: {
@@ -56,9 +62,5 @@
         text-align: center;
         height: 100px;
         margin-top: 8%;
-    }
-    #error-message{
-        color: #ff6666;
-        font-size: 14px;
     }
 </style>
