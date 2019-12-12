@@ -14,11 +14,11 @@
                         <b-col sm="4" class="text-sm-right"><b>Id:</b></b-col>
                         <b-col>{{ row.item.id }}</b-col>
                     </b-row>
-
                     <b-row class="mb-2">
                         <b-col sm="4" class="text-sm-right"><b>Score:</b></b-col>
                         <b-col>{{ row.item.score }}</b-col>
                     </b-row>
+                    <b-button size="sm" @click="goToExercises(row.item.id)" variant="info">Check exercises</b-button>
                 </b-card>
             </template>
         </b-table>
@@ -32,7 +32,7 @@
         data() {
             return {
                 fieldsToShow: ['login', 'permissionLevel', 'show_details'],
-                users: []
+                users: [],
             }
         },
         beforeMount: function () {
@@ -42,16 +42,24 @@
                     this.users.forEach(us => us._showDetails = false);
                     this.users.map(us => us.permissionLevel = (us.permissionLevel === 7) ? 'Admin' : 'User');
                     this.users = JSON.parse(JSON.stringify(this.users));
+                    // eslint-disable-next-line no-console
+                    console.log(this.users);
                 })
                 .catch(error => {
                     // eslint-disable-next-line no-console
                     console.log(error);
                 })
+        },
+        methods: {
+            goToExercises: function(exerciseId) {
+                this.$store.commit('updateExerciseId', exerciseId);
+                this.$router.push('/submitedExercise')
+            }
         }
     }
 </script>
 <style>
-    #users-container{
+    #users-container {
         font-family: 'Raleway', sans-serif;
     }
 </style>

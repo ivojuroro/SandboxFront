@@ -1,12 +1,28 @@
 import axios from 'axios';
 
 export const exerciseService = {
+    retrieveExerciseInfo,
     retrieveExercises,
     deleteExercise,
-    insertExercise
+    insertExercise,
+    submitExercise,
+    compileExercise
 };
 
 axios.defaults.baseURL = 'http://127.0.0.1:3605';
+
+function retrieveExerciseInfo(exerciseId){
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user');
+    return axios.get('/exercises/' + exerciseId)
+        .then( exerciseInfo => {
+            // eslint-disable-next-line no-console
+            console.log(exerciseInfo);
+            return exerciseInfo;
+        }).catch( error =>{
+            // eslint-disable-next-line no-console
+            console.log(error)
+        })
+}
 
 function retrieveExercises() {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user');
@@ -50,6 +66,37 @@ function deleteExercise(exercideId) {
         ).catch(error => {
             if (error.response)
                 // eslint-disable-next-line no-console
+                console.log(error.response.data);
+        });
+}
+function submitExercise(exerciseId, lang, code) {
+    let codeData = {lang: lang, code: code};
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user');
+    return axios.post('/submit/' + exerciseId, codeData)
+        .then( submitted =>{
+            // eslint-disable-next-line no-console
+            console.log(submitted);
+            return submitted;
+        })
+        .catch(error =>{
+            if (error.response)
+            // eslint-disable-next-line no-console
+                console.log(error.response.data);
+        })
+}
+
+function compileExercise(exerciseId, lang, code) {
+    let codeData = {lang: lang, code: code};
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user');
+    return axios.post('/exercises/' + exerciseId, codeData)
+        .then(compileResult =>{
+            // eslint-disable-next-line no-console
+            console.log(compileResult)
+            return compileResult;
+        })
+        .catch( error =>{
+            if (error.response)
+            // eslint-disable-next-line no-console
                 console.log(error.response.data);
         });
 }

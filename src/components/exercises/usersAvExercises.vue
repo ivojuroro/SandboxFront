@@ -7,7 +7,7 @@
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
                     {{ row.detailsShowing ? 'Hide' : 'Show'}}
                 </b-button>
-                <b-button size="sm" @click="implementExercise" class="mr-2" variant="danger">
+                <b-button size="sm" @click="implementExercise(row.item.id)" class="mr-2" variant="danger">
                     Try it!
                 </b-button>
             </template>
@@ -24,7 +24,6 @@
                 </b-card>
             </template>
         </b-table>
-        <b-button v-on:click="createExercise">Add exercise</b-button>
     </div>
 </template>
 
@@ -49,18 +48,18 @@
             );
         },
         methods: {
-            implementExercise: function () {
-                this.$router.push('/doExercise')
-            },
-            createExercise: function () {
-                this.$router.push('/createExercise')
+            implementExercise: function (exerciseId) {
+                this.$store.commit('updateExerciseId', exerciseId);
+                // eslint-disable-next-line no-console
+                console.log(exerciseId);
+                this.$router.push('/doExercise');
             }
         }
 
     }
 </script>
 <style>
-    #exercises-container{
+    #exercises-container {
         font-family: 'Raleway', sans-serif;
     }
 </style>

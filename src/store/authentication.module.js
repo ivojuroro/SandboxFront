@@ -7,13 +7,19 @@ const jwt = require('jsonwebtoken');
 
 const user = JSON.parse(localStorage.getItem('accessToken'));
 const initialState = user
-    ? {status: {loggedIn: true}, user, permissionLevel: null} // if it is already logged then the initial state is the user token
-    : { status: {}, user: null, permissionLevel: null}; // if not, there is nothing!
+    ? {status: {loggedIn: true}, user, permissionLevel: null, exerciseId: null, userId: null} // if it is already logged then the initial state is the user token
+    : { status: {}, user: null, permissionLevel: null, exerciseId: null, userId: null}; // if not, there is nothing!
 
 export const store = new Vuex.Store({
     namespaced: true,
     state: initialState,
     getters:{
+        getUserId: (state) =>{
+            return state.userId;
+        },
+        getExerciseId: (state) => {
+            return state.exerciseId;
+        },
         getUser: (state) => {
             return state.user;
             },
@@ -67,8 +73,15 @@ export const store = new Vuex.Store({
                 })
             });
         }
+
     },
     mutations: {
+        updateUserId(state, userId){
+            state.userId = userId;
+        },
+        updateExerciseId(state, exerciseId){
+          state.exerciseId = exerciseId;
+        },
         updatePermissionLevel(state, permissionLevel){
             state.permissionLevel = permissionLevel;
         },

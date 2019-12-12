@@ -19,6 +19,15 @@
                 ></b-form-input>
             </b-form-group>
 
+            <b-form-group id="input-group-description" label="Language of the example:" label-for="input-5">
+                <b-form-input
+                        id="input-5"
+                        v-model="form.exampleCodeLang"
+                        required
+                        placeholder="Enter example code language"
+                ></b-form-input>
+            </b-form-group>
+
             <b-form-group id="input-group-example-code" label="Example code:" label-for="input-3" size="5">
                 <b-form-textarea
                         id="input-example-code"
@@ -30,13 +39,13 @@
             </b-form-group>
 
             <b-form-group id="input-group-example-code" label="Test data:" label-for="input-4" size="5">
-                                <b-form-textarea
-                                        id="input-example-code"
-                                        rows="3"
-                                        max-rows="6"
-                                        v-model="form.testData"
-                                        placeholder="Enter test data: place a , between elements and a line feed between arrays"
-                                ></b-form-textarea>
+                <b-form-textarea
+                        id="input-example-code"
+                        rows="3"
+                        max-rows="6"
+                        v-model="form.testData"
+                        placeholder="Enter test data: place a , between elements and a line feed between arrays"
+                ></b-form-textarea>
             </b-form-group>
             <div>
                 <b-button type="submit" variant="primary" id="submit-button">Submit</b-button>
@@ -59,13 +68,19 @@
                     name: '',
                     description: '',
                     exampleCode: '',
-                    testData:''
+                    exampleCodeLang: '',
+                    testData: [[]]
                 }
             }
         },
         methods: {
-            modifyTestData(){
-                this.form.testData = this.form.testData.split("\n").map(d=>d.split(","));
+            modifyTestData() {
+                if (this.form.testData !== [[]]) {
+                    return
+                }
+                else {
+                    this.form.testData = this.form.testData.split("\n").map(d => d.split(","));
+                }
             },
             handleSubmit() {
                 this.modifyTestData();

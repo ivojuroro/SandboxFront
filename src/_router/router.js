@@ -9,6 +9,7 @@ import exercisesStatus from '../components/exercises/usersAvExercises'
 import Logout from '../../src/components/Logout'
 import createExercise from '../../src/components/exercises/createExercise'
 import sandbox from '../../src/components/sandbox/Sandbox'
+import submittedExercise from '../../src/components/exercises/submittedExerciseByUser'
 
 Vue.use(Router);
 
@@ -23,6 +24,7 @@ export const router = new Router({
         {path: '/logout', component: Logout, name: 'logout'},
         {path: '/createExercise', component: createExercise, name: 'createExercise'},
         {path: '/doExercise', component: sandbox, name: 'temporarySandboxPage'},
+        {path: '/submitedExercise', component: submittedExercise, name: 'submitedExerciseByUser'},
         {path: '*', redirect: 'home'}
     ],
 });
