@@ -44,11 +44,12 @@
                         rows="3"
                         max-rows="6"
                         v-model="form.testData"
-                        placeholder="Enter test data: place a , between elements and a line feed between arrays"
+                        placeholder="Enter test data: place a ',' between elements and a line feed between arrays"
                 ></b-form-textarea>
             </b-form-group>
             <div>
                 <b-button type="submit" variant="primary" id="submit-button">Submit</b-button>
+                <b-button variant="secondary" id="back-button" @click="backToExercises"> Back </b-button>
                 <b-button type="reset" variant="danger" id="reset-button">Reset</b-button>
             </div>
         </b-form>
@@ -85,7 +86,12 @@
             handleSubmit() {
                 this.modifyTestData();
                 exerciseService.insertExercise(JSON.stringify(this.form));
+                this.$router.push('/exercises');
+            },
+            backToExercises() {
+                this.$router.push('/exercises');
             }
+            
         }
     }
 </script>
