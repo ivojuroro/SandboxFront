@@ -9,7 +9,7 @@ export const exerciseService = {
     compileExercise
 };
 
-axios.defaults.baseURL = 'http://127.0.0.1:3605';
+axios.defaults.baseURL = 'http://127.0.0.1:3600';
 
 function retrieveExerciseInfo(exerciseId){
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user');

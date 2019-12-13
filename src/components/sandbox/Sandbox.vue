@@ -1,13 +1,17 @@
 <template>
     <section class="row h-100" id="sandbox_container">
         <b-col cols="4">
-            <aside style="height:45%; background-color:gainsboro" class="card border-solid justify-content-center">
+            <aside style="height:35%; background-color:gainsboro" class="card border-solid justify-content-center">
                 <p class="align-self-center">Description:</p><br>
                 <p class="align-self-center">{{exercise.description}}</p>
             </aside>
-            <aside style="height:45%; background-color:gainsboro" class="card border-solid justify-content-center">
-                <p class="align-self-center">Données d'entrée:</p><br>
+            <aside style="height:35%; background-color:gainsboro" class="card border-solid justify-content-center">
+                <p class="align-self-center">Input data:</p><br>
                 <p class="align-self-center">{{exercise.testData}}</p>
+            </aside>
+            <aside style="height:25%; background-color:gainsboro" class="card border-solid justify-content-center">
+                <p class="align-self-center">Result:</p><br>
+                <p class="align-self-center" id="result"></p>
             </aside>
         </b-col>
         <b-col cols="8">
@@ -26,6 +30,7 @@
             <b-row align-h="end" class="mr-10">
                 <b-button variant="success" id="runButton" type="button" @click="run"> Run</b-button>
                 <b-button variant="info" id="submitButton" type="button" @click="submit"> Submit</b-button>
+                <zen-modal v-if="showModal" @fireclose="showModal = false"></zen-modal>
                 <b-button variant="warning" id="homeButton" type="button" @click="home"> Home</b-button>
             </b-row>
         </b-col>
@@ -60,7 +65,8 @@
                     {value: "python", text: 'Python'}],
                 monedit: null,
                 h: 0,
-                w: 0
+                w: 0,
+                submitResult: ""
             }
         },
         beforeMount: function () {
@@ -99,6 +105,10 @@
                 exerciseService.submitExercise(this.$store.getters.getExerciseId, this.selected, this.code).then(submitted => {
                     // eslint-disable-next-line no-console
                     console.log(submitted)
+                    var score = JSON.stringify(submitted.data.score);
+                    document.getElementById("result").innerText=`score:${score}\n`
+
+                    
                 }).catch(error =>
                     // eslint-disable-next-line no-console
                     console.log(error)
@@ -107,15 +117,27 @@
             },
             run() {
                 // alert('run for exercise' + this.exercise.id + '\n with code:' + this.code + '\n with example code:' + this.exercise.exampleCode + '\n and testdata : ' + this.exercise.testData)
+                // alert('submit for exercise' + this.exercise.id + '\n with code:' + this.code + '\n with example code:' + this.exercise.exampleCode + '\n and testdata : ' + this.exercise.testData)
+                exerciseService.compileExercise(this.$store.getters.getExerciseId, this.selected, this.code).then(executed => {
+                    // eslint-disable-next-line no-console
+                    console.log(executed)
+                    var score = JSON.stringify(executed.data.score);
+                    var time = JSON.stringify(executed.data.time);
+                    var result = JSON.stringify(executed.data.result);
+                    document.getElementById("result").innerText=`score:${score}\ntime:${time}\nresult:${result}`
 
+                    
+                }).catch(error =>
+                    // eslint-disable-next-line no-console
+                    console.log(error)
+                );
             },
             home() {
                 this.$router.push('/')
             },
         },
         components: {
-            MonacoEditor
-        },
+            MonacoEditor        },
     }
 </script>
 

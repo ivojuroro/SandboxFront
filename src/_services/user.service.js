@@ -7,7 +7,7 @@ export const userService = {
     getUser
 };
 
-axios.defaults.baseURL = 'http://127.0.0.1:3605';
+axios.defaults.baseURL = 'http://127.0.0.1:3600';
 
 function login(username, password) {
     let loginUser = {login: username, password: password};
