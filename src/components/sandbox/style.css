@@ -13,7 +13,7 @@
 article{
     font: arial;
     font-size: 18px;
-    margin: 20px;
+    margin: 5px;
     padding: 12px;
     height:37%;
     border: 1px solid grey;
@@ -72,4 +72,12 @@ button#runButton:hover {
 button#submitButton:hover {
     background-color: blue;
     color: white;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }

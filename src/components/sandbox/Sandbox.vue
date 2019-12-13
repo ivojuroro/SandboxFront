@@ -7,11 +7,11 @@
             </aside>
             <aside style="height:35%; background-color:gainsboro" class="card border-solid justify-content-center">
                 <p class="align-self-center">Input data:</p><br>
-                <p class="align-self-center">{{exercise.testData}}</p>
+                <p class="align-self-center" id="testData"></p>
             </aside>
-            <aside style="height:25%; background-color:gainsboro" class="card border-solid justify-content-center">
-                <p class="align-self-center">Result:</p><br>
-                <p class="align-self-center" id="result"></p>
+            <aside style="height:25%; width:100%; background-color:gainsboro;" class="card border-solid justify-content-center">
+               <p class="align-self-center" style="height:15%;">Result:</p><br>
+                <textarea id = "result" style="border:0;height:100%; width:100%; background-color:gainsboro;" ></textarea>
             </aside>
         </b-col>
         <b-col cols="8">
@@ -30,16 +30,19 @@
             <b-row align-h="end" class="mr-10">
                 <b-button variant="success" id="runButton" type="button" @click="run"> Run</b-button>
                 <b-button variant="info" id="submitButton" type="button" @click="submit"> Submit</b-button>
-                <zen-modal v-if="showModal" @fireclose="showModal = false"></zen-modal>
                 <b-button variant="warning" id="homeButton" type="button" @click="home"> Home</b-button>
             </b-row>
         </b-col>
+        <transition name="fade">
+      <loading v-if="isLoading"></loading>
+    </transition>
     </section>
 </template>
 
 
 <script>
     import MonacoEditor from 'vue-monaco-editor';
+    import Loading from './index'
     import {editor} from 'monaco-editor';
     import {exerciseService} from "../../_services";
 
@@ -66,7 +69,8 @@
                 monedit: null,
                 h: 0,
                 w: 0,
-                submitResult: ""
+                submitResult: "",
+                isLoading: false
             }
         },
         beforeMount: function () {
@@ -77,7 +81,19 @@
                 this.exercise.name = exerciseInfo.data.name;
                 this.exercise.description = exerciseInfo.data.description;
                 this.exercise.exampleCode = exerciseInfo.data.exampleCode;
-                this.exercise.testData = exerciseInfo.data.testData;
+                //this.exercise.testData = exerciseInfo.data.testData;
+                this.exercise.testData = ``;
+                for(var i=0;i<exerciseInfo.data.testData.length;i++ ){
+                    this.exercise.testData += `\rgroup ${i+1}: `;
+                    for(var j=0;j<exerciseInfo.data.testData[i].length;j++){
+                        this.exercise.testData += `${exerciseInfo.data.testData[i][j]}`
+                    }
+
+                }
+                // eslint-disable-next-line no-console
+                console.log(this.exercise.testData);
+                document.getElementById("testData").innerText=this.exercise.testData
+
             }).catch(error =>
                 // eslint-disable-next-line no-console
                 console.log(error)
@@ -101,12 +117,14 @@
                 editor.setModelLanguage(this.monedit.getModel(), this.selected);
             },
             submit() {
+                this.isLoading=true;
                 // alert('submit for exercise' + this.exercise.id + '\n with code:' + this.code + '\n with example code:' + this.exercise.exampleCode + '\n and testdata : ' + this.exercise.testData)
                 exerciseService.submitExercise(this.$store.getters.getExerciseId, this.selected, this.code).then(submitted => {
+                    this.isLoading=false;
                     // eslint-disable-next-line no-console
                     console.log(submitted)
                     var score = JSON.stringify(submitted.data.score);
-                    document.getElementById("result").innerText=`score:${score}\n`
+                    document.getElementById("result").value=`score:${score}\n`
 
                     
                 }).catch(error =>
@@ -118,13 +136,17 @@
             run() {
                 // alert('run for exercise' + this.exercise.id + '\n with code:' + this.code + '\n with example code:' + this.exercise.exampleCode + '\n and testdata : ' + this.exercise.testData)
                 // alert('submit for exercise' + this.exercise.id + '\n with code:' + this.code + '\n with example code:' + this.exercise.exampleCode + '\n and testdata : ' + this.exercise.testData)
+                this.isLoading=true;
                 exerciseService.compileExercise(this.$store.getters.getExerciseId, this.selected, this.code).then(executed => {
+                    this.isLoading=false
                     // eslint-disable-next-line no-console
                     console.log(executed)
                     var score = JSON.stringify(executed.data.score);
                     var time = JSON.stringify(executed.data.time);
                     var result = JSON.stringify(executed.data.result);
-                    document.getElementById("result").innerText=`score:${score}\ntime:${time}\nresult:${result}`
+                    //if (result.indexOf("exit") != -1||result.indexOf("error") != -1)
+
+                    document.getElementById("result").value=`score: ${score}\ntime: ${time} ms\nresult: ${result}`
 
                     
                 }).catch(error =>
@@ -135,9 +157,20 @@
             home() {
                 this.$router.push('/')
             },
+            mounted() {
+    const me = this
+    // 初始化页面数据
+    me.loadPageData()
+  },
+  methosd:{
+    loadPageData: function() {
+      // axios 请求页面数据 .then 中将状态值修改  this.isLoading = false
+    }
+  }
         },
         components: {
-            MonacoEditor        },
+            MonacoEditor,
+            Loading        },
     }
 </script>
 
