@@ -6,7 +6,7 @@
                 <p class="align-self-center">{{exercise.description}}</p>
             </aside>
             <aside style="height:35%; background-color:gainsboro" class="card border-solid justify-content-center">
-                <p class="align-self-center" >Input data:</p><br>
+                <p class="align-self-center"   >Input data:</p><br>
                 <p class="align-self-center" id="testData"></p>
             </aside>
             <aside style="height:30%; width:100%; background-color:gainsboro;" class="card border-solid justify-content-center">

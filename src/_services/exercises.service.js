@@ -37,8 +37,9 @@ function retrieveExercises() {
 }
 
 function insertExercise(exercise) {
+    var processedExecs=processTestData(exercise);
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user');
-    return axios.post('/exercises', exercise, {headers: {
+    return axios.post('/exercises', processedExecs, {headers: {
             'Content-Type': 'application/json'
         }})
         .then(function (storedExercises) {
@@ -54,6 +55,51 @@ function insertExercise(exercise) {
         .catch((error) =>
             // eslint-disable-next-line no-console
             console.log(error));
+}
+
+function processTestData(exercise) {
+    var execs = JSON.parse(exercise);
+    var testData = execs.testData;
+    var data = testData.split('\n');
+    var arr = []
+    for(var i=0;i<data.length;i++){
+        arr.push([])
+        if(data[i].indexOf("[")!=-1){
+            arr[i].push(processArrayElem(data[i]))
+        }
+        else {
+            data[i] = data[i].split(",");
+            for(var j=0;j<data[i].length;j++){
+                if(isNum(data[i][j]))
+                    arr[i].push(parseInt(data[i][j]));
+                else
+                arr[i].push(data[i][j]);
+            }
+        }
+    }
+    execs.testData = arr;
+
+    
+    return JSON.stringify(execs);
+}
+function processArrayElem(elem)
+{
+    var arr=[];
+    var items = elem.substring(1,elem.length-1).split(",");
+    for(var i=0;i<items.length;i++) {
+        if(isNum(items[i]))
+            arr.push(parseInt(items[i]));
+        else
+            arr.push(items[i]);
+    }
+    return arr;
+}
+function isNum(str) {
+    var n = Number(str);
+    if (!isNaN(n))
+        return true;
+    return false;
+    
 }
 
 function deleteExercise(exercideId) {
