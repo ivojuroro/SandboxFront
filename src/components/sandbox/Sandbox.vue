@@ -1,5 +1,5 @@
 <template>
-    <section class="row h-100" id="sandbox_container">
+    <section class="row h-100" id="sandbox_container" style="top:10%">
         <b-col cols="4">
             <aside style="height:35%; background-color:gainsboro" class="card border-solid justify-content-center">
                 <p class="align-self-center">Description:</p><br>
@@ -16,8 +16,9 @@
         </b-col>
         <b-col cols="8">
             <b-form-select style="height:6% " v-model="selected" :options="langs" @input="updatelang"></b-form-select>
-            <div id='MonacoBox' style="height:80%" class="border-solid">
+            <div id='MonacoBox' style="height:80%" class="border-solid card">
                 <MonacoEditor id='Monaco'
+                               theme="light"
                               :height="h"
                               :width="w"
                               :language="selected"
@@ -27,7 +28,7 @@
                               @codeChange="onCodeChange"
                 ></MonacoEditor>
             </div>
-            <b-row align-h="end" class="mr-10">
+            <b-row align-h="end" class="mr-10" style="margin:10px">
                 <b-button variant="success" id="runButton" type="button" @click="run"> Run</b-button>
                 <b-button variant="info" id="submitButton" type="button" @click="submit"> Submit</b-button>
                 <b-button variant="warning" id="homeButton" type="button" @click="home"> Home</b-button>
@@ -102,7 +103,7 @@
         created() {
             // alert('here we should get the exercise data from the api');
             this.w = 0.645 * Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-            this.h = 0.800 * Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+            this.h = 0.79 * Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
         },
         methods: {
             onCodeChange(edit) {

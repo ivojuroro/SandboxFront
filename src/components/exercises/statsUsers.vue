@@ -27,7 +27,7 @@
 
 <script>
     import {userService} from "../../_services";
-
+    import {trainingService} from "../../_services/training.service.js";
     export default {
         data() {
             return {
@@ -51,9 +51,23 @@
                 })
         },
         methods: {
-            goToExercises: function(exerciseId) {
-                this.$store.commit('updateExerciseId', exerciseId);
-                this.$router.push('/submitedExercise')
+            goToExercises: function(userId) {
+                var exerciseId;
+                trainingService.getTrainings(userId)
+                    .then(training => {
+                        // eslint-disable-next-line no-console
+                        console.log("exerciseId:"+training)
+                        exerciseId = JSON.parse(training).exerciseId
+                        // eslint-disable-next-line no-console
+                        console.log("exerciseId:"+exerciseId)
+                        this.$store.commit('updateExerciseId', exerciseId);
+                        this.$router.push('/submitedExercise')
+                    })
+                    .catch(error => {
+                        // eslint-disable-next-line no-console
+                        console.log(error);
+                    });
+                
             }
         }
     }

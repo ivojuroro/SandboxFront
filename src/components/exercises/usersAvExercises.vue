@@ -7,7 +7,7 @@
                 <b-button size="sm" @click="row.toggleDetails" class="mr-2">
                     {{ row.detailsShowing ? 'Hide' : 'Show'}}
                 </b-button>
-                <b-button size="sm" @click="implementExercise(row.item.id)" class="mr-2" variant="danger">
+                <b-button size="sm" @click="implementExercise(row.item.id)" class="mr-2" variant="success">
                     Try it!
                 </b-button>
             </template>
