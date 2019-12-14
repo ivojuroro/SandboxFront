@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'Loading' // 定义的组件名称 使用时写法：loading
+  name: 'Loading' 
 }
 </script>
 
@@ -13,7 +13,7 @@ export default {
   position: fixed;
   left: 0;
   top: 0;
-  background: url('~@/assets/img/loading-cube.svg') center center no-repeat #fff;
+  background: url('~@/assets/img/loading-cube.svg') center center no-repeat transparent;
   width: 100vw;
   height: 100vh;
   z-index: 1000;

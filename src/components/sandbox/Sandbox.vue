@@ -6,10 +6,10 @@
                 <p class="align-self-center">{{exercise.description}}</p>
             </aside>
             <aside style="height:35%; background-color:gainsboro" class="card border-solid justify-content-center">
-                <p class="align-self-center">Input data:</p><br>
+                <p class="align-self-center" >Input data:</p><br>
                 <p class="align-self-center" id="testData"></p>
             </aside>
-            <aside style="height:25%; width:100%; background-color:gainsboro;" class="card border-solid justify-content-center">
+            <aside style="height:30%; width:100%; background-color:gainsboro;" class="card border-solid justify-content-center">
                <p class="align-self-center" style="height:15%;">Result:</p><br>
                 <textarea id = "result" style="border:0;height:100%; width:100%; background-color:gainsboro;" ></textarea>
             </aside>
@@ -141,11 +141,13 @@
                     this.isLoading=false
                     // eslint-disable-next-line no-console
                     console.log(executed)
-                    var score = JSON.stringify(executed.data.score);
-                    var time = JSON.stringify(executed.data.time);
-                    var result = JSON.stringify(executed.data.result);
+                    // var score = JSON.stringify(executed.data.score);
+                    // var time = JSON.stringify(executed.data.time);
+                    // var result = JSON.stringify(executed.data.result);
                     //if (result.indexOf("exit") != -1||result.indexOf("error") != -1)
-
+                    var score = executed.data.score;
+                    var time = executed.data.time;
+                    var result = executed.data.result;
                     document.getElementById("result").value=`score: ${score}\ntime: ${time} ms\nresult: ${result}`
 
                     
