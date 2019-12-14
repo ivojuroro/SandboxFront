@@ -1,15 +1,18 @@
 <template>
     <section class="row h-100" id="sandbox_container" style="top:10%">
         <b-col cols="4">
-            <aside style="height:35%; background-color:gainsboro" class="card border-solid justify-content-center">
+            <aside class="card justify-content-center" id="name-box-sandbox">
+                <p class="align-self-center">{{exercise.name}}</p>
+            </aside>
+            <aside class="card border-solid justify-content-center" id="desciption-box-sandbox">
                 <p class="align-self-center">Description:</p><br>
                 <p class="align-self-center">{{exercise.description}}</p>
             </aside>
-            <aside style="height:35%; background-color:gainsboro" class="card border-solid justify-content-center">
+            <aside class="card border-solid justify-content-center" id="input-box-sandbox">
                 <p class="align-self-center"   >Input data:</p><br>
                 <p class="align-self-center" id="testData"></p>
             </aside>
-            <aside style="height:30%; width:100%; background-color:gainsboro;" class="card border-solid justify-content-center">
+            <aside class="card border-solid justify-content-center" id="result-box-sandbox">
                <p class="align-self-center" style="height:15%;">Result:</p><br>
                 <textarea id = "result" style="border:0;height:100%; width:100%; background-color:gainsboro;" ></textarea>
             </aside>
@@ -29,9 +32,9 @@
                 ></MonacoEditor>
             </div>
             <b-row align-h="end" class="mr-10" style="margin:10px">
-                <b-button variant="success" id="runButton" type="button" @click="run"> Run</b-button>
-                <b-button variant="info" id="submitButton" type="button" @click="submit"> Submit</b-button>
-                <b-button variant="warning" id="homeButton" type="button" @click="home"> Home</b-button>
+                <b-button variant="success" id="run-button" type="button" @click="run"> Run</b-button>
+                <b-button variant="info" id="submit-button" type="button" @click="submit"> Submit</b-button>
+                <b-button variant="warning" id="home-button" type="button" @click="home"> Home</b-button>
             </b-row>
         </b-col>
         <transition name="fade">
@@ -51,9 +54,9 @@
         data() {
             return {
                 exercise: {
-                    id: '00000',
-                    name: 'test',
-                    description: 'Une description par défaut',
+                    id: '0',
+                    name: 'Default name',
+                    description: 'Default description',
                     exampleCode: '',
                     testData: []
                 },
@@ -85,9 +88,9 @@
                 //this.exercise.testData = exerciseInfo.data.testData;
                 this.exercise.testData = ``;
                 for(var i=0;i<exerciseInfo.data.testData.length;i++ ){
-                    this.exercise.testData += `\rgroup ${i+1}: `;
+                    this.exercise.testData += `\rGroup ${i+1}: `;
                     for(var j=0;j<exerciseInfo.data.testData[i].length;j++){
-                        this.exercise.testData += `${exerciseInfo.data.testData[i][j]}`
+                        this.exercise.testData += `${exerciseInfo.data.testData[i][j]}`+" "
                     }
 
                 }
@@ -183,5 +186,26 @@
         height: 100%;
         width: 100%;
         margin: 0%;
+    }
+    #name-box-sandbox{
+        font-family: 'Raleway', sans-serif;
+    }
+    #desciption-box-sandbox{
+        font-family: 'Raleway', sans-serif;
+        height:30%;
+        background-color:gainsboro;
+    }
+    #input-box-sandbox{
+        font-family: 'Raleway', sans-serif;
+        height:30%;
+        background-color:gainsboro;
+    }
+    #result-box-sandbox{
+        font-family: 'Raleway', sans-serif;
+        height:25%;
+        background-color:gainsboro;
+    }
+    #run-button{
+        margin-right: 10px;
     }
 </style>
