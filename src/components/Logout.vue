@@ -10,7 +10,6 @@
             return {}
         },
         beforeCreate(){
-            //todo: using mutations to reset userToken
         },
         created() {
             this.$store.dispatch('logout');
