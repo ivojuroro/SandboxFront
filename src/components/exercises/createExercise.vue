@@ -76,10 +76,10 @@
         },
         methods: {
             modifyTestData() {
-                if (this.form.testData !== [[]]) {
-                    return
-                }
-                else {
+                // if (this.form.testData[0].length === 0) {
+                //     return
+                // }
+                if (this.form.testData[0].length != 0) {
                     this.form.testData = this.form.testData.split("\n").map(d => d.split(","));
                 }
             },

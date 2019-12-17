@@ -37,7 +37,9 @@ function retrieveExercises() {
 }
 
 function insertExercise(exercise) {
-    var processedExecs=processTestData(exercise);
+    var processedExecs  = JSON.parse(exercise);
+    if (processedExecs.testData[0].length != 0)
+        processedExecs=processTestData(exercise);
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('user');
     return axios.post('/exercises', processedExecs, {headers: {
             'Content-Type': 'application/json'
