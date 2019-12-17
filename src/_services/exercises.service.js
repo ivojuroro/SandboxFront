@@ -61,16 +61,17 @@ function insertExercise(exercise) {
 
 function processTestData(exercise) {
     var execs = JSON.parse(exercise);
-    var testData = execs.testData;
-    var data = testData.split('\n');
+   // var testData = exercise.substring(exercise.indexOf("testData"),exercise.length);
+    //var data = testData.split('\n');
+    var data = execs.testData;
     var arr = []
     for(var i=0;i<data.length;i++){
         arr.push([])
-        if(data[i].indexOf("[")!=-1){
+        if(data[i][0].indexOf("[")!=-1){
             arr[i].push(processArrayElem(data[i]))
         }
         else {
-            data[i] = data[i].split(",");
+            //testData[i] = testData[i].split(",");
             for(var j=0;j<data[i].length;j++){
                 if(isNum(data[i][j]))
                     arr[i].push(parseInt(data[i][j]));
@@ -87,12 +88,15 @@ function processTestData(exercise) {
 function processArrayElem(elem)
 {
     var arr=[];
-    var items = elem.substring(1,elem.length-1).split(",");
-    for(var i=0;i<items.length;i++) {
-        if(isNum(items[i]))
-            arr.push(parseInt(items[i]));
+    //var items = elem.substring(1,elem.length-1).split(",");
+    for(var i=0;i<elem.length;i++) {
+        if(isNum(elem[i].substring(elem[i].indexOf("[")===-1?0:1,elem[i].length)))
+            arr.push(parseInt(elem[i].substring(elem[i].indexOf("[")===-1?0:1,elem[i].length)));
         else
-            arr.push(items[i]);
+            if(isNum(elem[i].substring(0,elem[i].indexOf("]")===-1?elem[i].length:elem[i].length-1)))
+            arr.push(parseInt(elem[i].substring(0,elem[i].indexOf("]")===-1?elem[i].length:elem[i].length-1)));
+        else
+            arr.push(elem[i]);
     }
     return arr;
 }
