@@ -12,7 +12,7 @@
     "bootstrap-vue": "^2.0.4",
     "core-js": "^3.3.2",
     "es6-promise": "^4.2.8",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "monaco-editor": "^0.18.1",
     "vue": "^2.6.10",
     "vue-cookies": "^1.5.13",
